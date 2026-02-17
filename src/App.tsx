@@ -1,14 +1,14 @@
 
 import React, { useEffect, useState } from 'react';
 import Terminal from './components/Terminal';
-import Pricing from './components/Pricing';
-import SaaSModule from './components/SaaSModule';
 import CEOProfile from './components/CEOProfile';
 import LandingPage from './components/LandingPage';
-import ChatWidget from './components/ChatWidget'; // Added Import
+import ChatWidget from './components/ChatWidget';
+import BookingAgent from './components/BookingAgent'; // NEW Import
 import { Mic, BarChart, Zap, ArrowRight, ShieldCheck } from 'lucide-react';
 
 const Logo: React.FC<{ size?: 'sm' | 'lg' }> = ({ size = 'sm' }) => (
+  // ... Logo implementation ...
   <div className={`flex flex-col select-none group cursor-default ${size === 'lg' ? 'transition-transform duration-1000 ease-out hover:scale-105 hover:-translate-y-2' : ''}`}>
     <div className={`font-display font-black tracking-tighter leading-none ${size === 'lg' ? 'text-7xl md:text-9xl' : 'text-2xl'} flex items-center relative`}>
 
@@ -56,6 +56,7 @@ function App() {
   });
 
   const [loaded, setLoaded] = useState(false);
+  const [showBooking, setShowBooking] = useState(false); // New State
 
   useEffect(() => {
     // Simulate high-end asset loading
@@ -130,19 +131,22 @@ function App() {
             </div>
 
             <p className="text-gray-400 max-w-2xl mx-auto text-lg mb-12 font-light leading-relaxed tracking-wide">
-              Deploy autonomous profit engines.
-              <span className="text-white block mt-2 font-normal">We build the <span className="text-boraine-yellow font-bold">AI</span> that builds your revenue.</span>
+              Elite AI Consultancy for Enterprise.
+              <span className="text-white block mt-2 font-normal">We engineer <span className="text-boraine-yellow font-bold">autonomous profit systems</span> for industry leaders.</span>
             </p>
 
             <div className="flex flex-col md:flex-row justify-center gap-6">
-              <button onClick={() => scrollToSection('terminal-section')} className="group relative px-10 py-5 bg-boraine-blue text-white font-bold uppercase tracking-[0.2em] text-xs overflow-hidden shadow-[0_0_20px_rgba(59,130,246,0.5)]">
+              <button
+                onClick={() => setShowBooking(true)}
+                className="group relative px-10 py-5 bg-boraine-blue text-white font-bold uppercase tracking-[0.2em] text-xs overflow-hidden shadow-[0_0_20px_rgba(59,130,246,0.5)]"
+              >
                 <div className="absolute inset-0 w-full h-full bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out mix-blend-overlay"></div>
                 <span className="relative z-10 flex items-center gap-3">
-                  Initialize Protocol <ArrowRight className="w-4 h-4" />
+                  Book Consultation <ArrowRight className="w-4 h-4" />
                 </span>
               </button>
               <button onClick={() => scrollToSection('capabilities')} className="px-10 py-5 bg-transparent border border-gray-700 text-gray-400 font-bold uppercase tracking-[0.2em] text-xs hover:border-boraine-blue hover:text-white transition-all backdrop-blur-sm">
-                View Architecture
+                View Case Studies
               </button>
             </div>
           </div>
@@ -190,21 +194,8 @@ function App() {
             ))}
           </div>
 
-          {/* SaaS Section */}
-          <section id="saas" className="bg-boraine-panel border-y border-white/5 py-32 relative overflow-hidden scroll-mt-20">
-            <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-boraine-blue/50 to-transparent"></div>
-            <div className="text-center mb-16 relative z-10">
-              <span className="text-boraine-blue text-[10px] font-bold uppercase tracking-[0.3em] mb-4 block font-mono">Proprietary Software</span>
-              <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">Direct Access Systems</h2>
-              <p className="text-gray-500 max-w-xl mx-auto font-light">
-                Subscribe to our internal tools. Generate compliance documents and tender proposals instantly.
-              </p>
-            </div>
-            <SaaSModule />
-          </section>
-
           <div id="investment" className="mt-32 scroll-mt-20">
-            <Pricing />
+            {/* Pricing Component removed for Agency Rebuild */}
           </div>
 
           {/* CEO Profile Section */}
@@ -266,6 +257,9 @@ function App() {
 
         {/* Floating Chat Agent */}
         <ChatWidget />
+
+        {/* Booking Interface */}
+        <BookingAgent isOpen={showBooking} onClose={() => setShowBooking(false)} />
 
       </div>
     </>
