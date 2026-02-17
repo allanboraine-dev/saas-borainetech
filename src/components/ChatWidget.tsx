@@ -45,7 +45,7 @@ const ChatWidget: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[60] flex flex-col items-end">
+    <div className="fixed bottom-6 right-6 z-[1000] flex flex-col items-end">
 
       {/* Chat Window */}
       <div
@@ -80,8 +80,8 @@ const ChatWidget: React.FC = () => {
               <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div
                   className={`max-w-[85%] p-3 text-sm rounded-lg ${msg.role === 'user'
-                      ? 'bg-boraine-blue text-white rounded-br-none'
-                      : 'bg-white/10 text-gray-200 border border-white/5 rounded-bl-none'
+                    ? 'bg-boraine-blue text-white rounded-br-none'
+                    : 'bg-white/10 text-gray-200 border border-white/5 rounded-bl-none'
                     }`}
                 >
                   {msg.role === 'model' ? (
@@ -117,7 +117,7 @@ const ChatWidget: React.FC = () => {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyPress}
               placeholder="Ask about our AI services..."
-              className="w-full bg-white/5 border border-white/10 rounded-full pl-4 pr-12 py-3 text-sm text-white focus:outline-none focus:border-boraine-blue/50 transition-colors placeholder:text-gray-500"
+              className="w-full bg-white/5 border border-white/10 rounded-full pl-4 pr-12 py-3 text-sm text-white focus:outline-none focus:border-boraine-blue/50 transition-colors placeholder:text-gray-500 relative z-[1001] pointer-events-auto"
             />
             <button
               onClick={handleSend}

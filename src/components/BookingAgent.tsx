@@ -138,7 +138,7 @@ const BookingAgent: React.FC<BookingAgentProps> = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 animate-in fade-in duration-300">
+        <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 animate-in fade-in duration-300">
             <div className="w-full max-w-lg bg-[#050505] border border-boraine-blue/30 rounded-2xl shadow-[0_0_50px_rgba(59,130,246,0.15)] overflow-hidden flex flex-col h-[85vh] max-h-[600px] relative">
 
                 {/* Header */}
@@ -215,7 +215,7 @@ const BookingAgent: React.FC<BookingAgentProps> = ({ isOpen, onClose }) => {
                                 onChange={(e) => setInputValue(e.target.value)}
                                 onKeyDown={(e) => e.key === 'Enter' && handleInput(inputValue)}
                                 placeholder="Type your response..."
-                                className="w-full bg-white/5 border border-white/10 rounded-full pl-5 pr-12 py-4 text-sm text-white focus:outline-none focus:border-boraine-blue/50 transition-colors"
+                                className="w-full bg-white/5 border border-white/10 rounded-full pl-5 pr-12 py-4 text-sm text-white focus:outline-none focus:border-boraine-blue/50 transition-colors relative z-[2001] pointer-events-auto shadow-inner"
                                 autoFocus
                             />
                             <button
