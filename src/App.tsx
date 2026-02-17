@@ -5,6 +5,8 @@ import CEOProfile from './components/CEOProfile';
 import LandingPage from './components/LandingPage';
 import ChatWidget from './components/ChatWidget';
 import BookingAgent from './components/BookingAgent'; // NEW Import
+import AgencyServices from './components/AgencyServices';
+import RoiSection from './components/RoiSection';
 import { Mic, BarChart, Zap, ArrowRight, ShieldCheck } from 'lucide-react';
 
 const Logo: React.FC<{ size?: 'sm' | 'lg' }> = ({ size = 'sm' }) => (
@@ -104,12 +106,12 @@ function App() {
           <div className="max-w-7xl mx-auto flex justify-between items-center border-b border-white/5 pb-6 backdrop-blur-md bg-boraine-bg/80">
             <Logo size="sm" />
             <div className="hidden md:flex gap-10 text-[10px] font-bold tracking-[0.2em] text-gray-400 uppercase font-mono">
-              <button onClick={() => scrollToSection('capabilities')} className="hover:text-boraine-blue transition-all hover:tracking-[0.25em]">Capabilities</button>
-              <button onClick={() => scrollToSection('saas')} className="hover:text-boraine-blue transition-all hover:tracking-[0.25em]">SaaS Division</button>
-              <button onClick={() => scrollToSection('investment')} className="hover:text-boraine-blue transition-all hover:tracking-[0.25em]">Investment</button>
-              <button onClick={() => scrollToSection('terminal-section')} className="text-boraine-blue flex items-center gap-2 group border border-boraine-blue/30 px-3 py-1 rounded hover:bg-boraine-blue/10">
+              <button onClick={() => scrollToSection('services')} className="hover:text-boraine-blue transition-all hover:tracking-[0.25em]">Services</button>
+              <button onClick={() => scrollToSection('roi')} className="hover:text-boraine-blue transition-all hover:tracking-[0.25em]">Value</button>
+              <button onClick={() => setShowBooking(true)} className="hover:text-boraine-blue transition-all hover:tracking-[0.25em]">Contact</button>
+              <button onClick={() => setShowBooking(true)} className="text-boraine-blue flex items-center gap-2 group border border-boraine-blue/30 px-3 py-1 rounded hover:bg-boraine-blue/10">
                 <div className="w-1.5 h-1.5 bg-boraine-yellow rounded-full group-hover:animate-pulse"></div>
-                Access Portal
+                Book Consultation
               </button>
             </div>
           </div>
@@ -145,7 +147,7 @@ function App() {
                   Book Consultation <ArrowRight className="w-4 h-4" />
                 </span>
               </button>
-              <button onClick={() => scrollToSection('capabilities')} className="px-10 py-5 bg-transparent border border-gray-700 text-gray-400 font-bold uppercase tracking-[0.2em] text-xs hover:border-boraine-blue hover:text-white transition-all backdrop-blur-sm">
+              <button onClick={() => scrollToSection('services')} className="px-10 py-5 bg-transparent border border-gray-700 text-gray-400 font-bold uppercase tracking-[0.2em] text-xs hover:border-boraine-blue hover:text-white transition-all backdrop-blur-sm">
                 View Case Studies
               </button>
             </div>
@@ -163,40 +165,13 @@ function App() {
             </div>
           </div>
 
-          {/* Service Pillars (Capabilities) */}
-          <div id="capabilities" className="scroll-mt-32 max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 mb-40">
-            {[
-              {
-                icon: <Mic className="w-5 h-5" />,
-                title: "AI Voice Reception",
-                desc: "1,000 concurrent call capacity. Natural language processing. Instant CRM synchronization."
-              },
-              {
-                icon: <BarChart className="w-5 h-5" />,
-                title: "Revenue Intelligence",
-                desc: "Dynamic pricing algorithms modeled on local market liquidity and competitor scarcity."
-              },
-              {
-                icon: <Zap className="w-5 h-5" />,
-                title: "Process Automation",
-                desc: "Autonomous workflow execution: invoicing, compliance, and logistical scheduling."
-              }
-            ].map((item, idx) => (
-              <div key={idx} className="group p-10 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/10 hover:border-boraine-blue/50 transition-all duration-500 backdrop-blur-sm relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-20 h-20 bg-boraine-blue/5 rounded-full blur-2xl group-hover:bg-boraine-blue/10 transition-colors"></div>
-
-                <div className="w-10 h-10 bg-boraine-blue/10 rounded flex items-center justify-center text-boraine-blue mb-8 group-hover:bg-boraine-blue group-hover:text-white transition-colors">
-                  {item.icon}
-                </div>
-                <h3 className="text-xl font-display font-bold text-white mb-4 tracking-tight">{item.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed font-light">{item.desc}</p>
-              </div>
-            ))}
+          {/* NEW: ROI Section */}
+          <div id="roi" className="scroll-mt-20">
+            <RoiSection />
           </div>
 
-          <div id="investment" className="mt-32 scroll-mt-20">
-            {/* Pricing Component removed for Agency Rebuild */}
-          </div>
+          {/* NEW: Services Section */}
+          <AgencyServices onBook={() => setShowBooking(true)} />
 
           {/* CEO Profile Section */}
           <div className="mt-20">

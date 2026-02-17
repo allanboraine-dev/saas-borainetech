@@ -5,7 +5,11 @@
 }
 
 body {
-    background-color: #020617;
+    background-color: #030712;
+    /* Slightly lighter/richer black */
+    background-image:
+        radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.05) 0%, transparent 40%);
     color: #F8FAFC;
     margin: 0;
     -webkit-font-smoothing: antialiased;
