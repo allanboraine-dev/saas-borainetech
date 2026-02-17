@@ -56,7 +56,7 @@ const AgencyServices: React.FC<{ onBook: () => void }> = ({ onBook }) => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {services.map((service, idx) => (
-                        <div key={idx} className="group p-8 bg-white/[0.03] border border-white/10 hover:border-boraine-blue/40 hover:bg-white/[0.06] hover:shadow-[0_0_30px_rgba(59,130,246,0.1)] transition-all duration-500 rounded-2xl relative flex flex-col backdrop-blur-sm">
+                        <div key={idx} className="group p-8 bg-white/[0.03] border border-white/10 hover:border-boraine-blue/40 hover:bg-white/[0.06] hover:shadow-[0_0_30px_rgba(59,130,246,0.1)] transition-all duration-500 rounded-2xl relative flex flex-col backdrop-blur-sm z-20">
                             <div className="mb-6 p-4 bg-boraine-blue/10 rounded-xl inline-block border border-boraine-blue/20 group-hover:scale-110 transition-transform duration-500">
                                 {service.icon}
                             </div>
@@ -72,7 +72,7 @@ const AgencyServices: React.FC<{ onBook: () => void }> = ({ onBook }) => {
                                 </div>
                                 <button
                                     onClick={onBook}
-                                    className="w-full py-3 bg-white/5 hover:bg-boraine-blue border border-white/10 hover:border-boraine-blue rounded-lg text-white text-xs font-bold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 group-hover:shadow-lg"
+                                    className="relative z-30 w-full py-3 bg-white/5 hover:bg-boraine-blue border border-white/10 hover:border-boraine-blue rounded-lg text-white text-xs font-bold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 group-hover:shadow-lg cursor-pointer hover:text-white"
                                 >
                                     Book Strategy <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                                 </button>
