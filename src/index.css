@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 :root {
     font-family: 'Inter', sans-serif;
@@ -17,6 +15,7 @@ body {
 /* Custom styles can be added here */
 .text-cyber-blue {
     background: linear-gradient(to right, #60a5fa, #3b82f6);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
