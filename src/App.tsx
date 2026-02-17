@@ -4,7 +4,7 @@ import Terminal from './components/Terminal';
 import CEOProfile from './components/CEOProfile';
 import LandingPage from './components/LandingPage';
 import ChatWidget from './components/ChatWidget';
-import BookingAgent from './components/BookingAgent'; // NEW Import
+// BookingAgent removed (Merged into Chat)
 import AgencyServices from './components/AgencyServices';
 import RoiSection from './components/RoiSection';
 import { Mic, BarChart, Zap, ArrowRight, ShieldCheck } from 'lucide-react';
@@ -58,7 +58,8 @@ function App() {
   });
 
   const [loaded, setLoaded] = useState(false);
-  const [showBooking, setShowBooking] = useState(false); // New State
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [chatContext, setChatContext] = useState<string | null>(null);
 
   useEffect(() => {
     // Simulate high-end asset loading
@@ -81,6 +82,11 @@ function App() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const handleBooking = (context: string = "General Consultation") => {
+    setChatContext(`I am interested in ${context}. How do we start?`);
+    setIsChatOpen(true);
   };
 
   return (
@@ -108,8 +114,8 @@ function App() {
             <div className="hidden md:flex gap-10 text-[10px] font-bold tracking-[0.2em] text-gray-400 uppercase font-mono">
               <button onClick={() => scrollToSection('services')} className="hover:text-boraine-blue transition-all hover:tracking-[0.25em]">Services</button>
               <button onClick={() => scrollToSection('roi')} className="hover:text-boraine-blue transition-all hover:tracking-[0.25em]">Value</button>
-              <button onClick={() => setShowBooking(true)} className="hover:text-boraine-blue transition-all hover:tracking-[0.25em]">Contact</button>
-              <button onClick={() => setShowBooking(true)} className="text-boraine-blue flex items-center gap-2 group border border-boraine-blue/30 px-3 py-1 rounded hover:bg-boraine-blue/10">
+              <button onClick={() => handleBooking()} className="hover:text-boraine-blue transition-all hover:tracking-[0.25em]">Contact</button>
+              <button onClick={() => handleBooking()} className="text-boraine-blue flex items-center gap-2 group border border-boraine-blue/30 px-3 py-1 rounded hover:bg-boraine-blue/10">
                 <div className="w-1.5 h-1.5 bg-boraine-yellow rounded-full group-hover:animate-pulse"></div>
                 Book Consultation
               </button>
@@ -139,7 +145,7 @@ function App() {
 
             <div className="flex flex-col md:flex-row justify-center gap-6">
               <button
-                onClick={() => setShowBooking(true)}
+                onClick={() => handleBooking()}
                 className="group relative px-10 py-5 bg-boraine-blue text-white font-bold uppercase tracking-[0.2em] text-xs overflow-hidden shadow-[0_0_20px_rgba(59,130,246,0.5)] active:bg-white"
               >
                 <div className="absolute inset-0 w-full h-full bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></div>
@@ -171,7 +177,7 @@ function App() {
           </div>
 
           {/* NEW: Services Section */}
-          <AgencyServices onBook={() => setShowBooking(true)} />
+          <AgencyServices onBook={handleBooking} />
 
           {/* CEO Profile Section */}
           <div className="mt-20">
@@ -231,10 +237,11 @@ function App() {
         </footer>
 
         {/* Floating Chat Agent */}
-        <ChatWidget />
-
-        {/* Booking Interface */}
-        <BookingAgent isOpen={showBooking} onClose={() => setShowBooking(false)} />
+        <ChatWidget
+          isOpen={isChatOpen}
+          onToggle={() => setIsChatOpen(!isChatOpen)}
+          initialContext={chatContext}
+        />
 
       </div>
     </>

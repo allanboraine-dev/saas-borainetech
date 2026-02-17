@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Phone, Code2, TrendingUp, Users, Database, Shield } from 'lucide-react';
+import { Phone, Code2, TrendingUp, Users, Shield, Server, Cloud, Briefcase, Globe } from 'lucide-react';
 
 const services = [
     {
@@ -28,20 +27,38 @@ const services = [
         benefit: "Scale operations without headcount headaches."
     },
     {
-        icon: <Database className="w-8 h-8 text-pink-500" />,
-        title: "Data Intelligence",
-        description: "Turn your raw data into actionable insights. We build dashboards that predict market trends, liquidity shifts, and customer churn before it happens.",
-        benefit: "Make decisions based on future data, not past."
+        icon: <Briefcase className="w-8 h-8 text-orange-400" />,
+        title: "Executive vCIO Services",
+        description: "Strategic technology leadership on demand. We align your IT roadmap with business goals, managing budgets, vendor relationships, and digital transformation initiatives.",
+        benefit: "C-Level strategy without the C-Level salary."
     },
     {
-        icon: <Shield className="w-8 h-8 text-cyan-500" />,
-        title: "Enterprise Security",
-        description: "Bank-grade encryption and compliance come standard. We ensure your AI systems are GDPR/POPIA compliant and secure against modern cyber threats.",
-        benefit: "Innovation without risk."
+        icon: <Server className="w-8 h-8 text-cyan-500" />,
+        title: "Mission-Critical Infrastructure",
+        description: "24/7 proactive monitoring and management of your entire IT estate. We ensure 99.99% uptime for servers, networks, and workstations with predictive maintenance.",
+        benefit: "Zero downtime. Maximum velocity."
+    },
+    {
+        icon: <Cloud className="w-8 h-8 text-blue-400" />,
+        title: "Hyperscale Cloud Architecture",
+        description: "Design, migrate, and optimize your cloud environment (Azure/AWS/GCP). We implement innovative serverless architectures and cost-optimization strategies.",
+        benefit: "Scalability with 30% lower cloud costs."
+    },
+    {
+        icon: <Shield className="w-8 h-8 text-red-500" />,
+        title: "Zero-Trust Cybersecurity",
+        description: "Military-grade protection for your digital assets. We implement EDR, SOC monitoring, and advanced threat hunting to neutralize ransomware before it strikes.",
+        benefit: "Bank-grade security compliance."
+    },
+    {
+        icon: <Globe className="w-8 h-8 text-purple-400" />,
+        title: "Modern Workplace",
+        description: "Empower your remote workforce with secure Microsoft 365 & Google Workspace implementations. Seamless collaboration, anywhere, on any device.",
+        benefit: "Productivity unleashed globally."
     }
 ];
 
-const AgencyServices: React.FC<{ onBook: () => void }> = ({ onBook }) => {
+const AgencyServices: React.FC<{ onBook: (service: string) => void }> = ({ onBook }) => {
     return (
         <section id="services" className="py-24 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -71,7 +88,7 @@ const AgencyServices: React.FC<{ onBook: () => void }> = ({ onBook }) => {
                                     {service.benefit}
                                 </div>
                                 <button
-                                    onClick={onBook}
+                                    onClick={() => onBook(service.title)}
                                     className="relative z-30 w-full py-3 bg-white/5 hover:bg-boraine-blue border border-white/10 hover:border-boraine-blue rounded-lg text-white text-xs font-bold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 group-hover:shadow-lg cursor-pointer hover:text-white"
                                 >
                                     Book Strategy <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span>
