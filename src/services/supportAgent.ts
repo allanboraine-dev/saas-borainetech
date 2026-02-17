@@ -10,11 +10,26 @@ const getApiKey = () => {
   }
 };
 
-const apiKey = getApiKey();
-const ai = new GoogleGenAI({ apiKey: apiKey || '' });
+// Lazy initialization to prevent crash if API key is missing at startup
+let ai: GoogleGenAI | null = null;
+
+const getAiClient = () => {
+  if (ai) return ai;
+
+  const apiKey = getApiKey();
+  if (!apiKey) return null;
+
+  try {
+    ai = new GoogleGenAI({ apiKey });
+    return ai;
+  } catch (e) {
+    console.error("Failed to initialize GoogleGenAI", e);
+    return null;
+  }
+};
 
 // Construct the Knowledge Base from existing constants
-const PRICING_CONTEXT = BORAINE_PRICING.map(t => 
+const PRICING_CONTEXT = BORAINE_PRICING.map(t =>
   `- ${t.name}: Setup ${t.setupFee}, Monthly ${t.retainer}. Features: ${t.features.join(', ')}.`
 ).join('\n');
 
@@ -49,7 +64,6 @@ export interface ChatMessage {
 }
 
 export const sendSupportMessage = async (history: ChatMessage[], userMsg: string): Promise<string> => {
-  if (!apiKey) return "Connection Error: Neural Link Offline (API Key Missing).";
 
   try {
     // Format history for Gemini
@@ -58,11 +72,14 @@ export const sendSupportMessage = async (history: ChatMessage[], userMsg: string
       parts: [{ text: m.text }]
     }));
 
-    const response = await ai.models.generateContent({
+    const aiClient = getAiClient();
+    if (!aiClient) return "Connection Error: Neural Link Offline (API Key Missing).";
+
+    const response = await aiClient.models.generateContent({
       model: 'gemini-3-flash-preview',
       config: {
         systemInstruction: SYSTEM_INSTRUCTION,
-        temperature: 0.6, // Slightly lower for more consistent factual answers
+        temperature: 0.6,
         maxOutputTokens: 300,
       },
       contents: [

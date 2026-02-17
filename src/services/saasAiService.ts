@@ -9,8 +9,15 @@ const getApiKey = () => {
   }
 };
 
-const apiKey = getApiKey();
-const ai = new GoogleGenAI({ apiKey: apiKey || '' });
+// Lazy Init
+let ai: GoogleGenAI | null = null;
+
+const getAiClient = () => {
+  if (ai) return ai;
+  const key = getApiKey();
+  if (!key) return null;
+  return new GoogleGenAI({ apiKey: key });
+};
 
 // Helper to strip base64 header
 const cleanBase64 = (dataUrl: string) => {
@@ -18,13 +25,12 @@ const cleanBase64 = (dataUrl: string) => {
 };
 
 export const generateSaaSContent = async (toolId: string, inputs: any): Promise<string> => {
-  if (!apiKey) return "SYSTEM ERROR: API Configuration Missing. Please check your environment variables.";
 
   try {
     let systemInstruction = "";
     let prompt = "";
     // Default to the robust flash model which handles text and images well
-    let model = "gemini-3-flash-preview"; 
+    let model = "gemini-3-flash-preview";
     let parts: any[] = [];
 
     // Configure the persona and prompt based on the tool
@@ -126,19 +132,19 @@ export const generateSaaSContent = async (toolId: string, inputs: any): Promise<
         2. Design Concept 1: Water-wise/Xeriscaping.
         3. Design Concept 2: Indigenous Lush.
         4. Plant List (Scientific & Common names).`;
-        
+
         // Handle Image
         if (inputs.image) {
-           // Detect mime type from base64 string
-           const mimeMatch = inputs.image.match(/^data:(.*);base64,/);
-           const mimeType = mimeMatch ? mimeMatch[1] : 'image/png';
+          // Detect mime type from base64 string
+          const mimeMatch = inputs.image.match(/^data:(.*);base64,/);
+          const mimeType = mimeMatch ? mimeMatch[1] : 'image/png';
 
-           parts.push({
-             inlineData: {
-               mimeType: mimeType, 
-               data: cleanBase64(inputs.image)
-             }
-           });
+          parts.push({
+            inlineData: {
+              mimeType: mimeType,
+              data: cleanBase64(inputs.image)
+            }
+          });
         }
         break;
 
@@ -148,7 +154,10 @@ export const generateSaaSContent = async (toolId: string, inputs: any): Promise<
 
     parts.push({ text: prompt });
 
-    const response = await ai.models.generateContent({
+    const aiClient = getAiClient();
+    if (!aiClient) return "SYSTEM ERROR: API Configuration Missing. Please check your environment variables.";
+
+    const response = await aiClient.models.generateContent({
       model: model,
       config: {
         systemInstruction: systemInstruction,

@@ -12,17 +12,27 @@ const getApiKey = () => {
   }
 };
 
-const apiKey = getApiKey();
-// Initialize GenAI client.
-const ai = new GoogleGenAI({ apiKey: apiKey || '' });
+// Lazy initialization
+let ai: GoogleGenAI | null = null;
+
+const getAiClient = () => {
+  if (ai) return ai;
+  const key = getApiKey();
+  if (!key) return null;
+
+  try {
+    ai = new GoogleGenAI({ apiKey: key });
+    return ai;
+  } catch (e) {
+    console.error("Failed to initialize AI", e);
+    return null;
+  }
+};
 
 export const sendMessageToGemini = async (
   history: Message[],
   userMessage: string
 ): Promise<string> => {
-  if (!apiKey) {
-    return "SYSTEM ERROR: API_KEY_MISSING. Please configure your environment variables.";
-  }
 
   try {
     // Format history for Gemini
@@ -35,8 +45,11 @@ export const sendMessageToGemini = async (
         parts: [{ text: m.content }],
       }));
 
+    const aiClient = getAiClient();
+    if (!aiClient) return "SYSTEM ERROR: API_KEY_MISSING. Please configure your environment variables.";
+
     // Call generateContent directly on the instance to preserve 'this' context
-    const response = await ai.models.generateContent({
+    const response = await aiClient.models.generateContent({
       model: 'gemini-3-flash-preview',
       config: {
         systemInstruction: SYSTEM_INSTRUCTION,
