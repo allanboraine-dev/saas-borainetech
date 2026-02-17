@@ -3,11 +3,7 @@ import { GoogleGenAI } from "@google/genai";
 import { BORAINE_PRICING } from "../constants";
 
 const getApiKey = () => {
-  try {
-    return process.env.API_KEY;
-  } catch (e) {
-    return undefined;
-  }
+  return import.meta.env.VITE_GEMINI_API_KEY;
 };
 
 // Lazy initialization to prevent crash if API key is missing at startup

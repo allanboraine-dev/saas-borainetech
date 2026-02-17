@@ -140,10 +140,10 @@ function App() {
             <div className="flex flex-col md:flex-row justify-center gap-6">
               <button
                 onClick={() => setShowBooking(true)}
-                className="group relative px-10 py-5 bg-boraine-blue text-white font-bold uppercase tracking-[0.2em] text-xs overflow-hidden shadow-[0_0_20px_rgba(59,130,246,0.5)]"
+                className="group relative px-10 py-5 bg-boraine-blue text-white font-bold uppercase tracking-[0.2em] text-xs overflow-hidden shadow-[0_0_20px_rgba(59,130,246,0.5)] active:bg-white"
               >
                 <div className="absolute inset-0 w-full h-full bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></div>
-                <span className="relative z-10 flex items-center gap-3 group-hover:text-boraine-blue transition-colors duration-300">
+                <span className="relative z-10 flex items-center gap-3 group-hover:text-boraine-blue active:text-boraine-blue transition-colors duration-300">
                   Book Consultation <ArrowRight className="w-4 h-4" />
                 </span>
               </button>
